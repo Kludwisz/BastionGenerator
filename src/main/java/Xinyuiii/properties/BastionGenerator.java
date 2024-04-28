@@ -85,6 +85,10 @@ public class BastionGenerator {
     }
 
     public List<Pair<BPos, List<ItemStack>>> generateLoot() {
+        return this.generateLoot(this.worldSeed);
+    }
+    
+    public List<Pair<BPos, List<ItemStack>>> generateLoot(long sisterSeed) {
         List<Pair<BPos, List<ItemStack>>> result = new ArrayList<>();
         List<Pair<BPos, LootTable>> chestsPos = new ArrayList<>();
         for (Piece p : pieces) {
@@ -112,7 +116,7 @@ public class BastionGenerator {
             NewDecoratorRandom rand = new NewDecoratorRandom();
             for (Pair<BPos, LootTable> chest : chestsPos) {
                 CPos chunk = chest.getFirst().toChunkPos();
-                long populationSeed = rand.getPopulationSeed(worldSeed, chunk.getX() << 4, chunk.getZ() << 4);
+                long populationSeed = rand.getPopulationSeed(sisterSeed, chunk.getX() << 4, chunk.getZ() << 4);
                 if (version.isBetween(MCVersion.v1_16,MCVersion.v1_18_2)) {
                     rand.setDecoratorSeed(populationSeed,12,4);
                 }
